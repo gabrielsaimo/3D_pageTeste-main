@@ -2,20 +2,23 @@ import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useKeyPress } from "react-use";
 
-import islandScene from "../assets/3d/land.glb";
+import modern from "../assets/3d/modern.glb";
 
 export function Island({ setCurrentStage, currentFocusPoint, ...props }) {
   const islandRef = useRef();
   const { camera } = useThree();
 
-  const { scene } = useGLTF(islandScene);
+  const { scene: modernScene } = useGLTF(modern);
+
+  useEffect(() => {
+    camera.position.set(0, 1, 1, 20);
+  }, [camera]);
 
   return (
-    <mesh ref={islandRef} {...props}>
-      <primitive object={scene} />
+    <group ref={islandRef} {...props}>
+      <primitive object={modernScene} />
       <OrbitControls />
-    </mesh>
+    </group>
   );
 }
